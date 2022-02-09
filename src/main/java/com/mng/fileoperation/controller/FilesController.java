@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,7 @@ public class FilesController {
 
     private final FileService fileService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "Upload a new file method")
     public ResponseEntity<UploadResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
@@ -38,7 +39,7 @@ public class FilesController {
         }
     }
 
-    @PutMapping("{fileId:.+}")
+    @PutMapping(value="{fileId:.+}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "Update a file method")
     public ResponseEntity<UploadResponseMessage> updateFile(@RequestParam("file") MultipartFile file
             , @PathVariable Long fileId) {
